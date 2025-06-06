@@ -13,5 +13,5 @@ C:/TouchGFXProjects/React_MOUSE_STMF429/Version_0.1/Core/Src/main.c:885:6:LCD_IO
 C:/TouchGFXProjects/React_MOUSE_STMF429/Version_0.1/Core/Src/main.c:901:6:LCD_IO_WriteReg	1
 C:/TouchGFXProjects/React_MOUSE_STMF429/Version_0.1/Core/Src/main.c:920:10:LCD_IO_ReadData	1
 C:/TouchGFXProjects/React_MOUSE_STMF429/Version_0.1/Core/Src/main.c:947:6:LCD_Delay	1
-C:/TouchGFXProjects/React_MOUSE_STMF429/Version_0.1/Core/Src/main.c:983:6:HAL_TIM_PeriodElapsedCallback	2
-C:/TouchGFXProjects/React_MOUSE_STMF429/Version_0.1/Core/Src/main.c:1001:6:Error_Handler	1
+C:/TouchGFXProjects/React_MOUSE_STMF429/Version_0.1/Core/Src/main.c:989:6:HAL_TIM_PeriodElapsedCallback	2
+C:/TouchGFXProjects/React_MOUSE_STMF429/Version_0.1/Core/Src/main.c:1007:6:Error_Handler	1
