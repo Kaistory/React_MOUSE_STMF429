@@ -10,6 +10,26 @@
             "Width": 512,
             "Height": 512,
             "RelativeFilename": "Black.png"
+          },
+          {
+            "Type": "TextArea",
+            "Name": "TextBegin",
+            "X": 48,
+            "Y": 31,
+            "Width": 145,
+            "Height": 91,
+            "TextId": "__SingleUse_6APT",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 250,
+              "Green": 250,
+              "Blue": 250
+            },
+            "Wildcard1": {
+              "TextId": "TextBeginID",
+              "UseBuffer": true,
+              "BufferSize": 10
+            }
           }
         ],
         "Interactions": []

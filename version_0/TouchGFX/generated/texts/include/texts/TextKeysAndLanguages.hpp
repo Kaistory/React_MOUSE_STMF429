@@ -12,6 +12,8 @@ enum LANGUAGES
 
 enum TEXTS
 {
+    T_TEXTBEGINID,
+    T___SINGLEUSE_6APT,
     NUMBER_OF_TEXT_KEYS
 };
 

@@ -5,6 +5,14 @@
   </Languages>
   <Texts>
     <TextGroup Id="Group1" />
+    <TextGroup Id="Unsorted">
+      <Text Id="TextBeginID" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">1&#10;1</Translation>
+      </Text>
+      <Text Id="__SingleUse_6APT" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">Begin&lt;value&gt;</Translation>
+      </Text>
+    </TextGroup>
   </Texts>
   <Typographies>
     <Typography Id="Default" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
