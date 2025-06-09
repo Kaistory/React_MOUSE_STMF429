@@ -11,6 +11,8 @@ public:
     virtual ~Screen1View() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+    virtual void handleTickEvent();
+    virtual void handleClickEvent(const ClickEvent& evt);
 protected:
 };
 

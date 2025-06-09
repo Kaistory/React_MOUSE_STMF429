@@ -22,22 +22,13 @@
 #include "cmsis_os.h"
 #include "app_touchgfx.h"
 #include "usb_device.h"
-#include "usbd_hid.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Components/ili9341/ili9341.h"
 
-extern USBD_HandleTypeDef hUsbDeviceHS;
-// Mouse HID Report Structure
-typedef struct {
-    uint8_t buttons;
-    int8_t x;
-    int8_t y;
-    int8_t wheel;
-} MouseHID_Report_t;
 
-void SendMouseHID(int16_t x, int16_t y);
-void AddTouchPoint(int16_t x, int16_t y);
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -155,20 +146,7 @@ static LCD_DrvTypeDef* LcdDrv;
 uint32_t I2c3Timeout = I2C3_TIMEOUT_MAX; /*<! Value of Timeout when I2C communication fails */
 uint32_t Spi5Timeout = SPI5_TIMEOUT_MAX; /*<! Value of Timeout when SPI communication fails */
 
-void SendMouseHID(int16_t x, int16_t y)
-{
-    MouseHID_Report_t mouseReport;
 
-    // Convert screen coordinates to relative mouse movement
-    // Scale down the movement for smoother control
-    mouseReport.x = (int8_t)(x);
-    mouseReport.y = (int8_t)(y);
-    mouseReport.buttons = 0;
-    mouseReport.wheel = 0;
-
-    // Send HID report
-    USBD_HID_SendReport(&hUsbDeviceHS, (uint8_t*)&mouseReport, sizeof(mouseReport));
-}
 
 /* USER CODE END 0 */
 
@@ -621,6 +599,9 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12|GPIO_PIN_13, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_RESET);
+
   /*Configure GPIO pins : VSYNC_FREQ_Pin RENDER_TIME_Pin FRAME_RATE_Pin MCU_ACTIVE_Pin */
   GPIO_InitStruct.Pin = VSYNC_FREQ_Pin|RENDER_TIME_Pin|FRAME_RATE_Pin|MCU_ACTIVE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -648,6 +629,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PG13 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
   /* USER CODE END MX_GPIO_Init_2 */
@@ -994,7 +982,7 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	SendMouseHID(5,5);
+
     osDelay(100);
   }
   /* USER CODE END 5 */
