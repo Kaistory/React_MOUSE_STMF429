@@ -100,8 +100,8 @@ void Screen1View::handleClickEvent(const ClickEvent& evt)
 
 void Screen1View::handleTickEvent()
 {
-
-	    if (currentCircle <= 5) // Mỗi giây
+	// Hiển thị hình tròn thu nhỏ
+	    if (currentCircle <= 5)
 	    {
 
 	        	switch(currentCircle)
@@ -117,7 +117,7 @@ void Screen1View::handleTickEvent()
 						circle4.invalidate();
 	        			circle4.setVisible(true);
 	        			circle4.invalidate();
-	        			osDelay(1000/4);
+	        			osDelay(1000/4); // Mỗi hình hiển thị trong vòng 1 giây chia 4
 	        			break;
 	        		case 1:
 	        			circle1.setVisible(false);
@@ -130,7 +130,7 @@ void Screen1View::handleTickEvent()
 						circle4.invalidate();
 	        			circle3.setVisible(true);
 	        			circle3.invalidate();
-	        			osDelay(1000/4);
+	        			osDelay(1000/4); // Mỗi hình hiển thị trong vòng 1 giây chia 4
 	        			break;
 	        		case 2:
 	        			circle1.setVisible(false);
@@ -143,7 +143,7 @@ void Screen1View::handleTickEvent()
 						circle4.invalidate();
 	        			circle2.setVisible(true);
 	        			circle2.invalidate();
-	        			osDelay(1000/4);
+	        			osDelay(1000/4);// Mỗi hình hiển thị trong vòng 1 giây chia 4
 	        			break;
 	        		case 3:
 	        			circle1.setVisible(false);
@@ -156,7 +156,7 @@ void Screen1View::handleTickEvent()
 						circle4.invalidate();
 	        			circle1.setVisible(true);
 	        			circle1.invalidate();
-	        			osDelay(1000/4);
+	        			osDelay(1000/4);// Mỗi hình hiển thị trong vòng 1 giây chia 4
 	        			break;
 	        		case 4:
 	        			circle1.setVisible(false);
@@ -167,7 +167,7 @@ void Screen1View::handleTickEvent()
 						circle3.invalidate();
 						circle4.setVisible(false);
 						circle4.invalidate();
-						osDelay(1000/4);
+						osDelay(1000/4);// Mỗi hình hiển thị trong vòng 1 giây chia 4
 	        	}
 	        currentCircle++;
 
