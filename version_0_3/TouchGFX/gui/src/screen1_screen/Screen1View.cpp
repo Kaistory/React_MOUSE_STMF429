@@ -100,12 +100,10 @@ void Screen1View::handleClickEvent(const ClickEvent& evt)
 
 void Screen1View::handleTickEvent()
 {
-	tickCounter++;
 
-	    if (tickCounter >= TICKS_PER_SECOND) // Mỗi giây
+	    if (currentCircle <= 5) // Mỗi giây
 	    {
-	        tickCounter = 0;
-	        osDelay(1000/TICKS_PER_SECOND);
+
 	        	switch(currentCircle)
 	        	{
 	        		case 0:
@@ -115,51 +113,63 @@ void Screen1View::handleTickEvent()
 						circle2.invalidate();
 						circle3.setVisible(false);
 						circle3.invalidate();
+						circle4.setVisible(false);
+						circle4.invalidate();
 	        			circle4.setVisible(true);
 	        			circle4.invalidate();
+	        			osDelay(1000/4);
 	        			break;
 	        		case 1:
-	        			circle4.setVisible(false);
-	        			circle4.invalidate();
-	        			circle3.setVisible(false);
-						circle3.invalidate();
+	        			circle1.setVisible(false);
+						circle1.invalidate();
 						circle2.setVisible(false);
 						circle2.invalidate();
+						circle3.setVisible(false);
+						circle3.invalidate();
+						circle4.setVisible(false);
+						circle4.invalidate();
 	        			circle3.setVisible(true);
 	        			circle3.invalidate();
+	        			osDelay(1000/4);
 	        			break;
 	        		case 2:
 	        			circle1.setVisible(false);
 						circle1.invalidate();
-						circle4.setVisible(false);
-						circle4.invalidate();
+						circle2.setVisible(false);
+						circle2.invalidate();
 						circle3.setVisible(false);
 						circle3.invalidate();
+						circle4.setVisible(false);
+						circle4.invalidate();
 	        			circle2.setVisible(true);
 	        			circle2.invalidate();
+	        			osDelay(1000/4);
 	        			break;
 	        		case 3:
 	        			circle1.setVisible(false);
 						circle1.invalidate();
-						circle4.setVisible(false);
-						circle4.invalidate();
+						circle2.setVisible(false);
+						circle2.invalidate();
 						circle3.setVisible(false);
 						circle3.invalidate();
-	        			circle2.setVisible(false);
-	        			circle2.invalidate();
+						circle4.setVisible(false);
+						circle4.invalidate();
 	        			circle1.setVisible(true);
 	        			circle1.invalidate();
+	        			osDelay(1000/4);
 	        			break;
 	        		case 4:
 	        			circle1.setVisible(false);
 						circle1.invalidate();
-						circle4.setVisible(false);
-	        			circle4.invalidate();
-	        			circle3.setVisible(false);
-						circle3.invalidate();
 						circle2.setVisible(false);
 						circle2.invalidate();
+						circle3.setVisible(false);
+						circle3.invalidate();
+						circle4.setVisible(false);
+						circle4.invalidate();
+						osDelay(1000/4);
 	        	}
 	        currentCircle++;
+
 	    }
 }
