@@ -3,7 +3,46 @@
     "Screens": [
       {
         "Name": "Screen1",
-        "Components": [],
+        "CanvasBufferSize": 3600,
+        "Components": [
+          {
+            "Type": "Circle",
+            "Name": "circle1",
+            "X": 80,
+            "Y": 120,
+            "Width": 80,
+            "Height": 80,
+            "Color": {
+              "Red": 240,
+              "Green": 12,
+              "Blue": 12
+            },
+            "CenterX": 40.0,
+            "CenterY": 40.0,
+            "Radius": 40.0,
+            "LineWidth": 2.0,
+            "EndAngle": 360.0,
+            "CapPrecision": "Butt"
+          },
+          {
+            "Type": "Circle",
+            "Name": "circle2",
+            "X": 80,
+            "Y": 120,
+            "Width": 80,
+            "Height": 80,
+            "Color": {
+              "Red": 235,
+              "Green": 14,
+              "Blue": 25
+            },
+            "CenterX": 40.0,
+            "CenterY": 40.0,
+            "Radius": 20.0,
+            "EndAngle": 360.0,
+            "CapPrecision": "Butt"
+          }
+        ],
         "Interactions": []
       }
     ],
