@@ -2,10 +2,15 @@
 #include "usb_device.h"
 #include "usbd_hid.h"
 #include "stm32f4xx_hal.h"
+
+// Đối tượng USB HID từ middleware
 extern USBD_HandleTypeDef hUsbDeviceHS;
-int16_t curentX = 0;
-int16_t curentY = 0;
-// Mouse HID Report Structure
+
+// Vị trí hiện tại của chuột
+float currentX = 0;
+float currentY = 0;
+
+// Cấu trúc báo cáo HID chuột
 typedef struct {
     uint8_t buttons;
     int8_t x;
@@ -13,25 +18,28 @@ typedef struct {
     int8_t wheel;
 } MouseHID_Report_t;
 
-void SendMouseHIDUSB(int16_t x, int16_t y)
+// Gửi báo cáo HID với delta tương đối
+void SendMouseHIDUSB(float deltaX, float deltaY)
 {
     MouseHID_Report_t mouseReport;
 
-    // Convert screen coordinates to relative mouse movement
-    // Scale down the movement for smoother control
-    mouseReport.x = (int8_t)(x);
-    mouseReport.y = (int8_t)(y);
+    // Giới hạn giá trị delta trong phạm vi -127 đến 127
+    if (deltaX > 127) deltaX = 127;
+    if (deltaX < -127) deltaX = -127;
+    if (deltaY > 127) deltaY = 127;
+    if (deltaY < -127) deltaY = -127;
+
+    mouseReport.x = (int8_t)deltaX;
+    mouseReport.y = (int8_t)deltaY;
     mouseReport.buttons = 0;
     mouseReport.wheel = 0;
 
-    // Send HID report
     USBD_HID_SendReport(&hUsbDeviceHS, (uint8_t*)&mouseReport, sizeof(mouseReport));
+
+    HAL_Delay(1); // Đảm bảo host nhận kịp gói tin
 }
 
-Screen1View::Screen1View()
-{
-
-}
+Screen1View::Screen1View() {}
 
 void Screen1View::setupScreen()
 {
@@ -43,26 +51,45 @@ void Screen1View::tearDownScreen()
     Screen1ViewBase::tearDownScreen();
 }
 
+// Xử lý sự kiện chạm
 void Screen1View::handleClickEvent(const ClickEvent& evt)
 {
-    if(evt.getType() == ClickEvent::PRESSED) {
-        // Add touch point for animation
+    if (evt.getType() == ClickEvent::PRESSED)
+    {
+        // Tỷ lệ từ màn hình cảm ứng 320x240 → PC 1920x1080
+        float scaleX = 1920.0f / 320.0f;
+        float scaleY = 1080.0f / 240.0f;
 
-        // Send mouse HID event
-    	if(curentX != evt.getX() || curentY != evt.getY() )
-    		{
-    				SendMouseHIDUSB(evt.getX(),evt.getY()); // Left click
-    			curentX = evt.getX();
-    			curentY = evt.getY();
-    		}
-    	HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_13);
+        int16_t rawX = evt.getX();
+        int16_t rawY = evt.getY();
+
+        float targetX = rawX * scaleX;
+        float targetY = rawY * scaleY;
+
+        float deltaX = targetX - currentX;
+        float deltaY = targetY - currentY;
+
+        // Gửi từng bước ±127
+        while (deltaX != 0 || deltaY != 0)
+        {
+            float stepX = (deltaX > 127) ? 127 : (deltaX < -127) ? -127 : deltaX;
+            float stepY = (deltaY > 127) ? 127 : (deltaY < -127) ? -127 : deltaY;
+
+            SendMouseHIDUSB(stepX, stepY);
+
+            currentX += stepX;
+            currentY += stepY;
+            deltaX -= stepX;
+            deltaY -= stepY;
+        }
+
+        // Toggle đèn debug
+        HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_13);
         invalidate();
-    } else if(evt.getType() == ClickEvent::RELEASED) {
-        // Send mouse release
-
-//        SendMouseHID(0, 0);
     }
 }
-void Screen1View::handleTickEvent(){
-//	SendMouseHIDUSB(5,5);
+
+void Screen1View::handleTickEvent()
+{
+    // Dùng nếu cần xử lý theo thời gian
 }
