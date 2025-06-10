@@ -2,6 +2,7 @@
 #include "usb_device.h"
 #include "usbd_hid.h"
 #include "stm32f4xx_hal.h"
+#include "cmsis_os.h"
 
 // Đối tượng USB HID từ middleware
 extern USBD_HandleTypeDef hUsbDeviceHS;
@@ -57,7 +58,7 @@ void Screen1View::handleClickEvent(const ClickEvent& evt)
     if (evt.getType() == ClickEvent::PRESSED)
     {
         // Tỷ lệ từ màn hình cảm ứng 320x240 → PC 1920x1080
-        float scaleX = 1920.0f * 2 / 320.0f;
+        float scaleX = 1920.0f * 2 / 320.0f; // vì setup tần số là 12,5 mhz
         float scaleY = 1080.0f / 240.0f;
 
         int16_t rawX = evt.getX();
@@ -104,25 +105,46 @@ void Screen1View::handleTickEvent()
 	    if (tickCounter >= TICKS_PER_SECOND) // Mỗi giây
 	    {
 	        tickCounter = 0;
+	        osDelay(1000/TICKS_PER_SECOND);
 	        	switch(currentCircle)
 	        	{
 	        		case 0:
+	        			circle1.setVisible(false);
+						circle1.invalidate();
+						circle2.setVisible(false);
+						circle2.invalidate();
+						circle3.setVisible(false);
+						circle3.invalidate();
 	        			circle4.setVisible(true);
 	        			circle4.invalidate();
 	        			break;
 	        		case 1:
 	        			circle4.setVisible(false);
 	        			circle4.invalidate();
+	        			circle3.setVisible(false);
+						circle3.invalidate();
+						circle2.setVisible(false);
+						circle2.invalidate();
 	        			circle3.setVisible(true);
 	        			circle3.invalidate();
 	        			break;
 	        		case 2:
-	        			circle3.setVisible(false);
-	        			circle3.invalidate();
+	        			circle1.setVisible(false);
+						circle1.invalidate();
+						circle4.setVisible(false);
+						circle4.invalidate();
+						circle3.setVisible(false);
+						circle3.invalidate();
 	        			circle2.setVisible(true);
 	        			circle2.invalidate();
 	        			break;
 	        		case 3:
+	        			circle1.setVisible(false);
+						circle1.invalidate();
+						circle4.setVisible(false);
+						circle4.invalidate();
+						circle3.setVisible(false);
+						circle3.invalidate();
 	        			circle2.setVisible(false);
 	        			circle2.invalidate();
 	        			circle1.setVisible(true);
@@ -131,6 +153,12 @@ void Screen1View::handleTickEvent()
 	        		case 4:
 	        			circle1.setVisible(false);
 						circle1.invalidate();
+						circle4.setVisible(false);
+	        			circle4.invalidate();
+	        			circle3.setVisible(false);
+						circle3.invalidate();
+						circle2.setVisible(false);
+						circle2.invalidate();
 	        	}
 	        currentCircle++;
 	    }
