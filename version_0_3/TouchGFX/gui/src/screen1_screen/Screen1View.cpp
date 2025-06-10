@@ -57,7 +57,7 @@ void Screen1View::handleClickEvent(const ClickEvent& evt)
     if (evt.getType() == ClickEvent::PRESSED)
     {
         // Tỷ lệ từ màn hình cảm ứng 320x240 → PC 1920x1080
-        float scaleX = 1920.0f / 320.0f;
+        float scaleX = 1920.0f * 2 / 320.0f;
         float scaleY = 1080.0f / 240.0f;
 
         int16_t rawX = evt.getX();
@@ -82,7 +82,15 @@ void Screen1View::handleClickEvent(const ClickEvent& evt)
             deltaX -= stepX;
             deltaY -= stepY;
         }
-
+        currentCircle = 0;
+		circle4.moveTo(evt.getX() - 20, evt.getY() - 20);
+		circle4.invalidate();
+		circle3.moveTo(evt.getX() - 20, evt.getY() - 20);
+		circle3.invalidate();
+		circle2.moveTo(evt.getX() - 20, evt.getY() - 20);
+		circle2.invalidate();
+		circle1.moveTo(evt.getX() - 20, evt.getY() - 20);
+		circle1.invalidate();
         // Toggle đèn debug
         HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_13);
         invalidate();
@@ -91,5 +99,39 @@ void Screen1View::handleClickEvent(const ClickEvent& evt)
 
 void Screen1View::handleTickEvent()
 {
-    // Dùng nếu cần xử lý theo thời gian
+	tickCounter++;
+
+	    if (tickCounter >= TICKS_PER_SECOND) // Mỗi giây
+	    {
+	        tickCounter = 0;
+	        	switch(currentCircle)
+	        	{
+	        		case 0:
+	        			circle4.setVisible(true);
+	        			circle4.invalidate();
+	        			break;
+	        		case 1:
+	        			circle4.setVisible(false);
+	        			circle4.invalidate();
+	        			circle3.setVisible(true);
+	        			circle3.invalidate();
+	        			break;
+	        		case 2:
+	        			circle3.setVisible(false);
+	        			circle3.invalidate();
+	        			circle2.setVisible(true);
+	        			circle2.invalidate();
+	        			break;
+	        		case 3:
+	        			circle2.setVisible(false);
+	        			circle2.invalidate();
+	        			circle1.setVisible(true);
+	        			circle1.invalidate();
+	        			break;
+	        		case 4:
+	        			circle1.setVisible(false);
+						circle1.invalidate();
+	        	}
+	        currentCircle++;
+	    }
 }

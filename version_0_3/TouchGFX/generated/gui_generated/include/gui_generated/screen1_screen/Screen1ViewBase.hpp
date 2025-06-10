@@ -31,6 +31,10 @@ protected:
     touchgfx::PainterRGB565 circle1Painter;
     touchgfx::Circle circle2;
     touchgfx::PainterRGB565 circle2Painter;
+    touchgfx::Circle circle3;
+    touchgfx::PainterRGB565 circle3Painter;
+    touchgfx::Circle circle4;
+    touchgfx::PainterRGB565 circle4Painter;
 
 private:
 

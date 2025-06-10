@@ -14,6 +14,9 @@ public:
     virtual void handleTickEvent();
     virtual void handleClickEvent(const ClickEvent& evt);
 protected:
+    int8_t currentCircle = -1;
+	int tickCounter;
+	static const int TICKS_PER_SECOND = 60;
 };
 
 #endif // SCREEN1VIEW_HPP
